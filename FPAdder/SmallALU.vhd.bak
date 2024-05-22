@@ -1,0 +1,44 @@
+LIBRARY ieee;
+USE ieee.std_logic_1164.ALL;
+
+Entity SmallALU is
+	port(clk, en, res : in std_logic;
+		  A, B, Exponent : in std_logic_vector(7 downto 0);
+		  ctrl: out std_logic;
+		  Lesser, Greater : out std_logic_vector(8 downto 0);
+	);
+End SmallALU;
+
+Architecture str of SmallALU is
+
+Signal Z : std_logic;
+
+
+Component Mux2x18Bit is
+	port(S : in std_logic;
+		  A, B : in std_logic_vector(7 downto 0);
+		  O : out std_logic_vector(7 downto 0)
+	);
+End Component;
+
+Component Counter8Bit is
+	PORT(
+		i_resetBar, i_load	: IN	STD_LOGIC;
+		i_clock			: IN	STD_LOGIC;
+		o_Value			: OUT	STD_LOGIC_VECTOR(7 downto 0)
+	);
+End Component;
+
+Component Comparator8Bit is
+	port(A, B : in std_logic_vector(7 downto 0);
+		  Greater, Equal : out std_logic
+	);
+End Component
+
+Component Shifter8Bit is
+	port(clk, res, en, Dir, Inpt : in std_logic;
+		  D : in std_logic_vector(7 downto 0);
+		  Q : out std_logic;
+		  Outpt : out std_logic_vector(7 downto 0)
+	);
+End Component;

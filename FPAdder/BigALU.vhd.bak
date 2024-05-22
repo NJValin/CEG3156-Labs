@@ -1,0 +1,8 @@
+LIBRARY ieee;
+USE ieee.std_logic_1164.ALL;
+
+Entity BigALU is
+	port (SignA, SignB, SignSel : in std_logic;
+			Greater, Lesser : out std_logic_vector(8 downto 0);
+			SignO, CO, ovf: out std_logic;
+	);

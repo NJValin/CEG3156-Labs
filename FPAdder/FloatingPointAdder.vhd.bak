@@ -1,0 +1,21 @@
+LIBRARY ieee;
+USE ieee.std_logic_1164.ALL;
+
+Entity FloatingPointAdder is
+	Port(SignA, SignB, GClock, GReset : in std_logic;
+		  MantissaA, MantissaB : in std_logic_vector(7 downto 0);
+		  ExponentA, ExponentB : in std_logic_vector(6 downto 0);
+		  SignOut, Overflow : out std_logic;
+		  MantissaOut : out std_logic_vector(7 downto 0);
+		  ExponentOutL : out std_logic_vector(6 downto 0)
+	);
+End FloatingPointAdder;
+
+Architecture str of FloatingPointAdder is
+
+Component FullAdder8Bit is
+	port(A, B : in std_logic_vector(7 downto 0);
+		  cin : in std_logic;
+		  S : out std_logic_vector(7 downto 0);
+		  cout, ovf : out std_logic
+	);

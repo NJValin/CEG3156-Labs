@@ -1,0 +1,32 @@
+LIBRARY ieee;
+USE ieee.std_logic_1164.ALL;
+
+Entity FullAdder8Bit is
+	port(A, B : in std_logic_vector(7 downto 0);
+		  cin : in std_logic;
+		  S : out std_logic_vector(7 downto 0);
+		  cout : out std_logic
+	);
+End FullAdder8Bit;
+
+Architecture str of FullAdder8Bit is
+
+Signal c0,c1,c2,c3,c4,c5,c6,c7 : std_logic;
+
+Signal R : std_logic_vector(7 downto 0);
+
+Component FullAdder1Bit is
+	port(A, B, cin : in std_logic;
+		  S, cout: out std_logic
+	);
+End Component;
+
+Begin
+
+Adder0 : FullAdder1Bit
+	port map(
+		A => A(0),
+		B => B(0) xor cin,
+		cin => cin,
+		S => R(0),
+		cout => c0);
