@@ -1,0 +1,23 @@
+library IEEE;
+use ieee.std_logic_1164.ALL;
+
+entity CLA12Bit is
+	port(a : in std_logic_vector(11 downto 0);
+        b : in std_logic_vector(11 downto 0);
+        cin : in std_logic;
+        s : out std_logic_vector(11 downto 0);
+        cout : out std_logic
+	);
+End CLA12Bit;
+
+Architecture str if CLA12Bit is
+
+Component CLA4Bit
+	port(a : in std_logic_vector(3 downto 0);
+        b : in std_logic_vector(3 downto 0);
+        cin : in std_logic;
+        s : out std_logic_vector(3 downto 0);
+        cout : out std_logic
+	);
+End Component;
+

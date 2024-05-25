@@ -1,0 +1,18 @@
+LIBRARY ieee;
+USE ieee.std_logic_1164.ALL;
+
+Entity NormRounder is
+	port (clk, en, res, cin : in std_logic;
+			E : in std_logic_vector(6 downto 0);
+			M : in std_logic_vector(17 downto 0);
+			Eout : out std_logic_vector(6 downto 0);
+			Mout : out std_logic_vector(7 downto 0);
+	);
+End NormRounder;
+
+Architecture str of NormRounder is
+
+	Signal Flag : std_logic_vector;
+	
+	
+Component 

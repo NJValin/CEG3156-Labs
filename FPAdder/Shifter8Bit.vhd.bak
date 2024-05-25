@@ -1,0 +1,22 @@
+LIBRARY ieee;
+USE ieee.std_logic_1164.ALL;
+
+Entity Shifter8Bit is
+	Port(clk, res, en, Dir, I : in std_logic;
+		  D : in std_logic_vector(7 downto 0);
+		  Q : out std_logic;
+		  O : out std_logic_vector(7 downto 0);
+	);
+End Shifter8Bit;
+
+Architecture str of Shifter8Bit is
+
+Component enardFF_2
+	PORT(
+		i_resetBar	: IN	STD_LOGIC;
+		i_d		: IN	STD_LOGIC;
+		i_enable	: IN	STD_LOGIC;
+		i_clock		: IN	STD_LOGIC;
+		o_q, o_qBar	: OUT	STD_LOGIC
+	);
+END Component;

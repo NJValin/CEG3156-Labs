@@ -1,0 +1,43 @@
+LIBRARY ieee;
+USE ieee.std_logic_1164.ALL;
+
+Entity SignedFullAdder8Bit is
+	port(A, B : in std_logic_vector(7 downto 0);
+		  cin : in std_logic;
+		  S : out std_logic_vector(7 downto 0);
+		  cout, ovf : out std_logic
+	);
+End SignedFullAdder8Bit;
+
+Architecture str of SignedFullAdder8Bit is
+
+
+
+Component Comparator8Bit is
+	port(A, B : in std_logic_vector(7 downto 0);
+		  Greater, Equal : out std_logic
+	);
+End Component;
+
+Component Mux2x18Bit is
+	port(S : in std_logic;
+		  A, B : in std_logic_vector(7 downto 0);
+		  O : out std_logic_vector(7 downto 0)
+	);
+End Component;
+
+Component FullAdder1Bit is
+	port(A, B, cin : in std_logic;
+		  S, cout: out std_logic
+	);
+End Component;
+
+Component FullAdder8Bit is
+	port(A, B : in std_logic_vector(7 downto 0);
+		  cin : in std_logic;
+		  S : out std_logic_vector(7 downto 0);
+		  cout, ovf : out std_logic
+	);
+End FullAdder8Bit;
+
+Begin
