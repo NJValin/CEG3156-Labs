@@ -74,5 +74,6 @@ testbench/*
 *_sim/*
 incremental_db/
 db/
+_hdl_checker/
 _output_files/
 PLLJ_PLLSPE_INFO.txt
