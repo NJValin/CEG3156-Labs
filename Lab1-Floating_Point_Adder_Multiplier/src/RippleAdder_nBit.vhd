@@ -8,7 +8,8 @@ entity RippleAdder_nBit is
 		A, B : in STD_LOGIC_VECTOR(n-1 downto 0);
 		sub : in STD_LOGIC;
 		result : out STD_LOGIC_VECTOR(n-1 downto 0);
-		V : out STD_LOGIC :='0');
+		V : out STD_LOGIC :='0';
+		carryOut : out std_logic);
 end RippleAdder_nBit;
 
 architecture struct of RippleAdder_nBit is
@@ -36,6 +37,6 @@ architecture struct of RippleAdder_nBit is
 					SUM=>result(i),
 					Cout=>carryOuts(i));
 		end generate loop1;
-		
+		carryOut<=carryOuts(n-1);
 		V<=carryOuts(n-1) xor carryOuts(n-2);
 end struct;

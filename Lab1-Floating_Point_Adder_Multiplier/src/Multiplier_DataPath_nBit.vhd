@@ -13,13 +13,16 @@ entity Multiplier_DataPath_nBit is
 		productLoad, productIntLoad : in STD_LOGIC;
 		product : out STD_LOGIC_VECTOR(2*n-1 downto 0);
 		multiplicandZero : out STD_LOGIC;
-		multiplicandLSB : out STD_LOGIC);
+		multiplicandLSB : out STD_LOGIC;
+		int_multiplicandOut : out STD_LOGIC_VECTOR(n-1 downto 0);
+		int_multiplierOut,productTemp : out STD_LOGIC_VECTOR(2*n-1 downto 0));
 end Multiplier_DataPath_nBit;
 
 architecture struct of Multiplier_DataPath_nBit is
 
 	signal multiplicandOut, tempZero : STD_LOGIC_VECTOR(n-1 downto 0);
-	signal multiplierIn, multiplierOut, productOut, productIn : STD_LOGIC_VECTOR(2*n-1 downto 0);
+	signal multiplierIn, multiplierOut, productOut, productRegIn : STD_LOGIC_VECTOR(2*n-1 downto 0);
+	signal productIn : STD_LOGIC_VECTOR(2*n downto 0);
 	
 	begin
 		multiplicand : entity work.GeneralPurposeRegister(struct)
@@ -32,6 +35,7 @@ architecture struct of Multiplier_DataPath_nBit is
 				load=>multiplicandLoad, serialIn=>'0',
 				asyncClr=>startOperation, asyncSet=>'0',
 				regOut=>multiplicandOut);
+		int_multiplicandOut<=multiplicandOut;
 		multiplicandLSB <= multiplicandOut(0);
 		tempZero <=(others=>'0') ;
 		
@@ -55,33 +59,37 @@ architecture struct of Multiplier_DataPath_nBit is
 				load=>multiplierLoad, serialIn=>'0',
 				asyncClr=>startOperation, asyncSet=>'0',
 				regOut=>multiplierOut);
+		int_multiplierOut<=multiplierOut;
 
 		Adder : entity work.RippleAdder_nBit(struct)
 			generic map (
-				n=>2*n)
+				n=>2*n+1)
 			port map (
-				A=>productOut, B=>multiplierOut,
+				A=>'0'& productOut, B=>'0' & multiplierOut,
 				sub=>'0',
-				result=>productIn);
+				result=>productIn);	
+		
 		productIntReg : entity work.GeneralPurposeRegister(struct)
 			generic map (
 				n=>2*n)
 			port map (
-				regIn=>productIn,
+				regIn=>productIn(2*n-1 downto 0),
 				clk=>clk,
 				shiftLeft=>'0', shiftRight=>'0',
 				load=>productIntLoad, serialIn=>'0',
 				asyncClr=>startOperation, asyncSet=>'0',
 				regOut=>productOut);
-		
+		productTemp<=productOut;
+		productRegIn<=productOut;
 		productReg : entity work.GeneralPurposeRegister(struct)
 			generic map (
 				n=>2*n)
 			port map (
-				regIn=>productOut,
+				regIn=>productRegIn,
 				clk=>clk,
 				shiftLeft=>'0', shiftRight=>'0',
 				load=>productLoad, serialIn=>'0',
 				asyncClr=>startOperation, asyncSet=>'0',
 				regOut=>product);
+	
 end struct;

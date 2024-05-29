@@ -8,14 +8,18 @@ entity Multiplier_nBit is
 		A, B : in STD_LOGIC_VECTOR(n-1 downto 0);
 		clk : in STD_LOGIC;
 		startOperation : in STD_LOGIC;
-		operationDone : out STD_LOGIC;
-		product : out STD_LOGIC_VECTOR(2*n-1 downto 0));
+		operationDone : out STD_LOGIC := '0';
+		product : out STD_LOGIC_VECTOR(2*n-1 downto 0);
+		int_multiplicandOut: out STD_LOGIC_VECTOR(n-1 downto 0);
+		int_multiplierOut, productTemp : out STD_LOGIC_VECTOR(2*n-1 downto 0);
+		intS : out STD_LOGIC_VECTOR(5 downto 0));
 end Multiplier_nBit;
 
 architecture struct of Multiplier_nBit is
 	signal int_multiplicandShift, int_multiplicandLoad, int_multiplierShift : STD_LOGIC;
 	signal int_multiplierLoad, int_productLoad, int_productIntLoad : STD_LOGIC;
 	signal int_multiplicandZero, int_multiplicandLSB : STD_LOGIC;
+
 	begin
 	
 	dataPath : entity work.Multiplier_DataPath_nBit(struct)
@@ -29,7 +33,9 @@ architecture struct of Multiplier_nBit is
 			productLoad=>int_productLoad, productIntLoad=>int_productIntLoad,
 			product=>product,
 			multiplicandZero=>int_multiplicandZero,
-			multiplicandLSB=>int_multiplicandLSB);
+			multiplicandLSB=>int_multiplicandLSB,
+			int_multiplicandOut=>int_multiplicandOut, int_multiplierOut=>int_multiplierOut,
+			productTemp=>productTemp);
 	
 	controlPath : entity work.Multiplier_Control_nBit(struct)
 		port map (
@@ -39,5 +45,6 @@ architecture struct of Multiplier_nBit is
 			multiplicandLoad=>int_multiplicandLoad, multiplierLoad=>int_multiplierLoad,
 			multiplicandShift=>int_multiplicandShift, multiplierShift=>int_multiplierShift,
 			productIntLoad=>int_productIntLoad, productLoad=>int_productLoad,
-			operationDone=>operationDone);
+			operationDone=>operationDone,
+			intS=>intS);
 end struct;
