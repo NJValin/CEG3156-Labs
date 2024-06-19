@@ -13,7 +13,10 @@ entity FPMultiplier is
 		SignOut : out STD_LOGIC;
 		MantissaOut : out STD_LOGIC_VECTOR(7 downto 0);
 		ExponentOut : out STD_LOGIC_VECTOR(6 downto 0);
-		V : out STD_LOGIC);
+		V : out STD_LOGIC;
+		int_loadEA, int_loadEB, int_loadMA, int_loadMB, int_loadEP, int_loadpreMP, int_loadMP : out STD_LOGIC;
+		int_incrementEP, int_enableMult, int_rounding, int_preMPShift : out STD_LOGIC;
+		int_preMP_G, int_preMP_8, int_preMP_RS, int_normalized, int_multDone : out STD_LOGIC);
 end FPMultiplier;
 
 architecture struct of FPMultiplier is
@@ -38,6 +41,23 @@ architecture struct of FPMultiplier is
 			Overflow=>V,
 			-- Output control signals
 			preMP_G=>preMP_G, preMP_8=>preMP_8, preMP_RS=>preMP_RS, normalized=>normalized, multDone=>multDone);
+	int_loadEA<=loadEA;
+	int_loadEB<=loadEB;
+	int_loadMA<=loadMA;
+	int_loadMB<=loadMB;
+	int_loadEP<=loadEP;
+	int_loadpreMP<=loadpreMP;
+	int_loadMP<=loadMP;
+	int_incrementEP<=incrementEP;
+	int_enableMult<=enableMult;
+	int_rounding<=rounding;
+	int_preMPShift<=preMPShift;
+	int_preMP_G<=preMP_G;
+	int_preMP_8<=preMP_8;
+	int_preMP_RS<=preMP_RS;
+	int_normalized<=normalized;
+	int_multDone<=multDone;
+	
 	
 	controlUnit : entity work.FPMultiplier_ControlPath(struct)
 		port map (
