@@ -1,0 +1,40 @@
+-- Copyright (C) 2023  Intel Corporation. All rights reserved.
+-- Your use of Intel Corporation's design tools, logic functions 
+-- and other software and tools, and any partner logic 
+-- functions, and any output files from any of the foregoing 
+-- (including device programming or simulation files), and any 
+-- associated documentation or information are expressly subject 
+-- to the terms and conditions of the Intel Program License 
+-- Subscription Agreement, the Intel Quartus Prime License Agreement,
+-- the Intel FPGA IP License Agreement, or other applicable license
+-- agreement, including, without limitation, that your use is for
+-- the sole purpose of programming logic devices manufactured by
+-- Intel and sold by Intel or its authorized distributors.  Please
+-- refer to the applicable agreement for further details, at
+-- https://fpgasoftware.intel.com/eula.
+
+-- Quartus Prime generated Memory Initialization File (.mif)
+
+WIDTH=32;
+DEPTH=256;
+
+ADDRESS_RADIX=HEX;
+DATA_RADIX=HEX;
+
+CONTENT BEGIN
+	-- set all to nop (add $t1, $t1, $t1)
+	[00..FF]: 00000000;
+
+	000: 8C020000; --lw $2,0 $t2=memory(00)=55
+	001: 8C030001; --lw $3,1 memory(01)=AA
+	002: 00430802; --sub $1,$2,$3 t1 = t2-$t3=55
+	003: 00232005; --or $4,$1,$3 $t4 = $t1 or $t3 = FF
+	004: AC040003; --sw $4,3 memory(03)=FF
+	005: 00430800; --add $1,$2,$3 $t1=$t2 + $t3 = FF
+	006: AC010004; --sw $1,4; memory(04)=FF
+	007: 8C020003; --lw $2,3; $t2=memory(3)=FF
+	008: 8C030004; --lw $3,4; $t3=memory(4)=FF
+	009: 0800000B; --j 11;
+	010: 102100F5; --beq $1,$1,-11 (we use direct addresssing) go to start of program
+	011: 102200FE;
+END;
