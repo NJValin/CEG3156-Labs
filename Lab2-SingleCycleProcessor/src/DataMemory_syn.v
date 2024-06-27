@@ -124,7 +124,6 @@ module  DataMemory_altsyncram
 		ram_block1a_0.init_file = "./MemoryFiles/dataMem.mif",
 		ram_block1a_0.init_file_layout = "port_a",
 		ram_block1a_0.logical_ram_name = "ALTSYNCRAM",
-		ram_block1a_0.mem_init0 = 256'h0000000000000000000000000000000000000000000000000000000000000001,
 		ram_block1a_0.operation_mode = "single_port",
 		ram_block1a_0.port_a_address_width = 8,
 		ram_block1a_0.port_a_byte_enable_mask_width = 1,
@@ -185,7 +184,6 @@ module  DataMemory_altsyncram
 		ram_block1a_1.init_file = "./MemoryFiles/dataMem.mif",
 		ram_block1a_1.init_file_layout = "port_a",
 		ram_block1a_1.logical_ram_name = "ALTSYNCRAM",
-		ram_block1a_1.mem_init0 = 256'h0000000000000000000000000000000000000000000000000000000000000002,
 		ram_block1a_1.operation_mode = "single_port",
 		ram_block1a_1.port_a_address_width = 8,
 		ram_block1a_1.port_a_byte_enable_mask_width = 1,
@@ -246,7 +244,6 @@ module  DataMemory_altsyncram
 		ram_block1a_2.init_file = "./MemoryFiles/dataMem.mif",
 		ram_block1a_2.init_file_layout = "port_a",
 		ram_block1a_2.logical_ram_name = "ALTSYNCRAM",
-		ram_block1a_2.mem_init0 = 256'h0000000000000000000000000000000000000000000000000000000000000001,
 		ram_block1a_2.operation_mode = "single_port",
 		ram_block1a_2.port_a_address_width = 8,
 		ram_block1a_2.port_a_byte_enable_mask_width = 1,
@@ -307,7 +304,6 @@ module  DataMemory_altsyncram
 		ram_block1a_3.init_file = "./MemoryFiles/dataMem.mif",
 		ram_block1a_3.init_file_layout = "port_a",
 		ram_block1a_3.logical_ram_name = "ALTSYNCRAM",
-		ram_block1a_3.mem_init0 = 256'h0000000000000000000000000000000000000000000000000000000000000002,
 		ram_block1a_3.operation_mode = "single_port",
 		ram_block1a_3.port_a_address_width = 8,
 		ram_block1a_3.port_a_byte_enable_mask_width = 1,
@@ -368,7 +364,6 @@ module  DataMemory_altsyncram
 		ram_block1a_4.init_file = "./MemoryFiles/dataMem.mif",
 		ram_block1a_4.init_file_layout = "port_a",
 		ram_block1a_4.logical_ram_name = "ALTSYNCRAM",
-		ram_block1a_4.mem_init0 = 256'h0000000000000000000000000000000000000000000000000000000000000001,
 		ram_block1a_4.operation_mode = "single_port",
 		ram_block1a_4.port_a_address_width = 8,
 		ram_block1a_4.port_a_byte_enable_mask_width = 1,
@@ -429,7 +424,6 @@ module  DataMemory_altsyncram
 		ram_block1a_5.init_file = "./MemoryFiles/dataMem.mif",
 		ram_block1a_5.init_file_layout = "port_a",
 		ram_block1a_5.logical_ram_name = "ALTSYNCRAM",
-		ram_block1a_5.mem_init0 = 256'h0000000000000000000000000000000000000000000000000000000000000002,
 		ram_block1a_5.operation_mode = "single_port",
 		ram_block1a_5.port_a_address_width = 8,
 		ram_block1a_5.port_a_byte_enable_mask_width = 1,
@@ -490,7 +484,6 @@ module  DataMemory_altsyncram
 		ram_block1a_6.init_file = "./MemoryFiles/dataMem.mif",
 		ram_block1a_6.init_file_layout = "port_a",
 		ram_block1a_6.logical_ram_name = "ALTSYNCRAM",
-		ram_block1a_6.mem_init0 = 256'h0000000000000000000000000000000000000000000000000000000000000001,
 		ram_block1a_6.operation_mode = "single_port",
 		ram_block1a_6.port_a_address_width = 8,
 		ram_block1a_6.port_a_byte_enable_mask_width = 1,
@@ -551,7 +544,6 @@ module  DataMemory_altsyncram
 		ram_block1a_7.init_file = "./MemoryFiles/dataMem.mif",
 		ram_block1a_7.init_file_layout = "port_a",
 		ram_block1a_7.logical_ram_name = "ALTSYNCRAM",
-		ram_block1a_7.mem_init0 = 256'h0000000000000000000000000000000000000000000000000000000000000002,
 		ram_block1a_7.operation_mode = "single_port",
 		ram_block1a_7.port_a_address_width = 8,
 		ram_block1a_7.port_a_byte_enable_mask_width = 1,
@@ -571,6 +563,10 @@ module  DataMemory_altsyncram
 	assign
 		address_a_wire = address_a,
 		q_a = {wire_ram_block1a_7portadataout[0], wire_ram_block1a_6portadataout[0], wire_ram_block1a_5portadataout[0], wire_ram_block1a_4portadataout[0], wire_ram_block1a_3portadataout[0], wire_ram_block1a_2portadataout[0], wire_ram_block1a_1portadataout[0], wire_ram_block1a_0portadataout[0]};
+	initial/*synthesis enable_verilog_initial_construct*/
+ 	begin
+		$display("Warning: Memory initialization file ./MemoryFiles/dataMem.mif is not found. This may result in inconsistent simulation results.");
+	end
 endmodule //DataMemory_altsyncram
 //VALID FILE
 
