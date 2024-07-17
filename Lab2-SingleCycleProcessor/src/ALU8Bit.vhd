@@ -11,9 +11,9 @@ End ALU8Bit;
 
 Architecture str of ALU8Bit is
 
-Signal Result : std_logic_vector(7 downto 0);
+Signal Result, ResN, subl, preres : std_logic_vector(7 downto 0);
 Signal Carry : std_logic_vector(3 downto 0);
-Signal stl, tempovf : std_logic;
+Signal stl, tempovf, sub : std_logic;
 
 Component ALU1Bit is
 	port (A, B, Binvert, Cin, Less : in std_logic;
@@ -36,7 +36,7 @@ Begin
 A0: ALU1Bit
 	Port Map(A => A(0),
 				B => B(0),
-				Cin => Operation(2),
+				Cin => '0',
 				Binvert => Operation(2),
 				Less => stl,
 				Op => Operation,
@@ -89,9 +89,23 @@ A31: ALU1Bit
 				Ovf => tempovf
 	);
 	
+
+ResN <= not Result;
+sub <= Operation(2) and Operation(1) and not Operation(0);
+
+subl(0) <= sub;
+subl(1) <= sub;
+subl(2) <= sub;
+subl(3) <= sub;
+subl(4) <= sub;
+subl(5) <= sub;
+subl(6) <= sub;
+subl(7) <= sub;
+
 Overflow <= tempovf and Operation(1);
-Zero <= not(Result(0) or Result(1) or Result(2) or Result(3) or Result(4) or Result(5) or Result(6) or Result(7));
-ALUResult <= Result;
+preres <= (ResN and subl) or (Result and not subl);
+Zero <= not(preres(0) or preres(1) or preres(2) or preres(3) or preres(4) or preres(5) or preres(6) or preres(7));
+ALUResult <= preres;
 
 End str;
 	

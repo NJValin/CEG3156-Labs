@@ -17,7 +17,7 @@ RFormat <= (not Op(5)) and (not Op(4)) and (not Op(3)) and (not Op(2)) and (not 
 lw <= (Op(5)) and (not Op(4)) and (not Op(3)) and (not Op(2)) and (Op(1)) and (Op(0));
 sw <= (Op(5)) and (not Op(4)) and (Op(3)) and (not Op(2)) and ( Op(1)) and (Op(0));
 beq <= (not Op(5)) and (not Op(4)) and (not Op(3)) and (Op(2)) and (not Op(1)) and (not Op(0));
-jmp <= (not Op(5)) and (not Op(4)) and (not Op(4)) and (not Op(1)) and Op(1) and (not Op(0));
+jmp <= (not Op(5)) and (not Op(4)) and (not Op(3)) and (not Op(2)) and (Op(1)) and (not Op(0));
 
 RegDst <= RFormat;
 MemtoReg <= lw;

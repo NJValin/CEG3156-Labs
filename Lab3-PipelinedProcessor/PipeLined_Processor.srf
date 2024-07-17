@@ -1,0 +1,3 @@
+{ "" "" "" "WYSIWYG primitive \"InstructionMemory:InstrMem\|altsyncram:altsyncram_component\|altsyncram_vmr3:auto_generated\|ram_block1a10\" has a port clk0 that is stuck at VCC" {  } {  } 0 15400 "" 0 0 "Design Software" 0 -1 0 ""}
+{ "" "" "" "*" {  } {  } 0 332125 "" 0 0 "Design Software" 0 -1 0 ""}
+{ "" "" "" "*" {  } {  } 0 15400 "" 0 0 "Design Software" 0 -1 0 ""}

@@ -5,8 +5,10 @@ entity SingleCycleProcessor is
 	port (
 		ValueSelect : in STD_LOGIC_VECTOR (2 downto 0):="000";
 		GClock, GReset : in STD_LOGIC := '0';
+		int_clk : in STD_LOGIC := '0';
 		MuxOut : out STD_LOGIC_VECTOR(7 downto 0);
 		InstructionOut : out STD_LOGIC_VECTOR(31 downto 0);
+		int_instruction : out STD_LOGIC_VECTOR(7 downto 0);
 		BranchOut, ZeroOut, MemWriteOut, RegWriteOut : out STD_LOGIC);
 end entity;
 
@@ -15,7 +17,7 @@ architecture struct of SingleCycleProcessor is
 	signal PC_Plus_4, BranchAddress, BrnchOrSeq: STD_LOGIC_VECTOR(7 downto 0);
 	signal CurrentInstruction : STD_LOGIC_VECTOR(31 downto 0);--:= "00000000000000000000000000000000";
 	signal WriteReg : STD_LOGIC_VECTOR(4 downto 0):="00000";
-	signal RegDst, MemtoReg, RegWrite, MemRead, MemWrite, Branch, ALUOp1, ALUOp0, Jump, Zero, V : std_logic :='0';
+	signal RegDst, MemtoReg, RegWrite, MemRead, MemWrite, Branch, ALUOp1, ALUOp0, Jump, Zero, V : std_logic;
 	signal ALUOp : STD_LOGIC_VECTOR(2 downto 0) :="000";
 	begin
 
@@ -42,12 +44,13 @@ architecture struct of SingleCycleProcessor is
 				load=>'1', serialIn=>'0',
 				asyncClr=>GReset, asyncSet=>'0',
 				regOut=>Address);
-		
+		int_instruction <= Address;
 		-- Instruction ROM
 		InstrMem : entity work.InstructionMemory(SYN)
 			port map (
 				address=>Address,
 				rden=>'1',
+				clock=>int_clk,
 				q=>CurrentInstruction);
 
 		-- Register File
@@ -66,6 +69,7 @@ architecture struct of SingleCycleProcessor is
 				RegWrite,
 				Rs, Rt);
 
+
 		-- Arithmetic Logic Unit
 		ALUControl : entity work.ALUControlUnit(str)
 			port map (
@@ -83,17 +87,16 @@ architecture struct of SingleCycleProcessor is
 		-- Either write the ALU result or the Data memory to the Register File
 		WriteBackMux : entity work.Mux2x1_nBit(struct)
 			port map (
-				ALUResult, Data,
+				Data,ALUResult,
 				MemToReg,
 				WriteData);
-
 		-- Data RAM
 		DataRAM : entity work.DataMemory(SYN) 
 			port map (
 				aclr=>GReset,
 				address=>CurrentInstruction(7 downto 0),
-				clock=>GClock,
 				data=>Rt,
+				clock=>int_clk,
 				wren=>MemWrite,
 				q=>Data);
 
